@@ -69,10 +69,14 @@ document.addEventListener("DOMContentLoaded", () => {
       Array.from(select.options).forEach((option) => {
         const matches = option.value.toLowerCase().includes(searchValue);
         const matchesStrict = option.value.toLowerCase() === searchValue; // Strict matching
+        
         option.hidden = !matches;
         if (matches) matchingOptions++;
         if (matchesStrict) matchingOptionsStrict++;
       });
+
+      console.log(matchingOptions);
+      console.log(matchingOptionsStrict);
 
       if (matchingOptionsStrict === 0) {
         console.log('No match');
