@@ -77,6 +77,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (matchesStrict) matchingOptionsStrict++;
       });
 
+      console.log(this, searchInput);
+
       if (matchingOptionsStrict === 0) {
         console.log('No match');
         //this.classList.add("is-invalid");
