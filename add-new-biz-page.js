@@ -79,11 +79,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (matchingOptionsStrict === 0) {
         console.log('No match');
-        this.classList.add("is-invalid");
+        //this.classList.add("is-invalid");
         submit_btn.setAttribute("disabled", "disabled");
       } else {
         console.log('Match');
-        this.classList.remove("is-invalid");
+        //this.classList.remove("is-invalid");
         submit_btn.removeAttribute("disabled");
       }
       select.size = Math.max(matchingOptions, 1) + 1;
