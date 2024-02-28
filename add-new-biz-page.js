@@ -7,9 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const touchDevice = isTouchDevice();
   
   if (touchDevice) {
-    //console.log("Touch device detected.");
+    //console.log("Touch device");
   } else {
-    //console.log("Non-touch device detected.");
+    //console.log("Non-touch device");
   }
 
   // Locations array
