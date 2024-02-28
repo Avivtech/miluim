@@ -76,16 +76,19 @@ document.addEventListener("DOMContentLoaded", () => {
         if (matches) matchingOptions++;
         if (matchesStrict) matchingOptionsStrict++;
       });
-
-      if (matchingOptionsStrict === 0) {
-        //console.log('No match');
-        searchInput.classList.add("is-invalid");
-        submit_btn.setAttribute("disabled", "disabled");
-      } else {
-        //console.log('Match');
-        searchInput.classList.remove("is-invalid");
-        submit_btn.removeAttribute("disabled");
-      }
+      
+      setTimeout(function(){
+        if (matchingOptionsStrict === 0) {
+          //console.log('No match');
+          searchInput.classList.add("is-invalid");
+          submit_btn.setAttribute("disabled", "disabled");
+        } else {
+          //console.log('Match');
+          searchInput.classList.remove("is-invalid");
+          submit_btn.removeAttribute("disabled");
+        }
+      }, 200);
+      
       select.size = Math.max(matchingOptions, 1) + 1;
       clearButton.style.display = searchInput.value ? "inline-block" : "none";
     };
