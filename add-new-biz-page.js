@@ -76,15 +76,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if (matches) matchingOptions++;
         if (matchesStrict) matchingOptionsStrict++;
       });
-      console.log(this, searchInput);
 
       if (matchingOptionsStrict === 0) {
         console.log('No match');
-        //this.classList.add("is-invalid");
+        searchInput.classList.add("is-invalid");
         submit_btn.setAttribute("disabled", "disabled");
       } else {
         console.log('Match');
-        //this.classList.remove("is-invalid");
+        searchInput.classList.remove("is-invalid");
         submit_btn.removeAttribute("disabled");
       }
       select.size = Math.max(matchingOptions, 1) + 1;
