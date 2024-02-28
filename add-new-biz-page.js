@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     searchInput.addEventListener("focus", showAndFilterOptions);
     searchInput.addEventListener("input", showAndFilterOptions);
-    searchInput.addEventListener("blur", showAndFilterOptions);
+    searchInput.addEventListener("change", showAndFilterOptions);
 
     function selectClicked(event) {
       const isClickOutsideSelect = !select.contains(event.target);
