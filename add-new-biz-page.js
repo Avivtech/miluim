@@ -76,7 +76,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (matches) matchingOptions++;
         if (matchesStrict) matchingOptionsStrict++;
       });
-
       console.log(this, searchInput);
 
       if (matchingOptionsStrict === 0) {
