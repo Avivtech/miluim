@@ -79,11 +79,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       setTimeout(function () {
         if (matchingOptionsStrict === 0) {
-          //console.log('No match');
+          console.log('No match');
           searchInput.classList.add("is-invalid");
           submit_btn.setAttribute("disabled", "disabled");
         } else {
-          //console.log('Match');
+          console.log('Match');
           searchInput.classList.remove("is-invalid");
           submit_btn.removeAttribute("disabled");
         }
