@@ -5,7 +5,7 @@ function isTouchDevice() {
 document.addEventListener("DOMContentLoaded", () => {
   const submit_btn = document.getElementById("submit");
   const touchDevice = isTouchDevice();
-  
+
   if (touchDevice) {
     //console.log("Touch device");
   } else {
@@ -67,17 +67,17 @@ document.addEventListener("DOMContentLoaded", () => {
       const searchValue = searchInput.value.toLowerCase();
       let matchingOptions = 0;
       let matchingOptionsStrict = 0;
-      
+
       Array.from(select.options).forEach((option) => {
         const matches = option.value.toLowerCase().includes(searchValue);
         const matchesStrict = option.value.toLowerCase() === searchValue; // Strict matching
-        
+
         option.hidden = !matches;
         if (matches) matchingOptions++;
         if (matchesStrict) matchingOptionsStrict++;
       });
-      
-      setTimeout(function(){
+
+      setTimeout(function () {
         if (matchingOptionsStrict === 0) {
           //console.log('No match');
           searchInput.classList.add("is-invalid");
@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
           submit_btn.removeAttribute("disabled");
         }
       }, 200);
-      
+
       select.size = Math.max(matchingOptions, 1) + 1;
       clearButton.style.display = searchInput.value ? "inline-block" : "none";
     };
@@ -276,7 +276,7 @@ document.addEventListener("DOMContentLoaded", () => {
             inputElement = sibling.querySelector('[data-role="url"]');
             sibling = sibling.nextElementSibling;
           }
-          console.log(inputElement, result.info);
+          //console.log(inputElement, result.info);
           btn.parentElement.classList.add("upload-success");
           btn.querySelector(".w-inline-block").innerText = result.info.original_filename + "." + result.info.format;
           sccTxt.innerText = "מעולה!";
