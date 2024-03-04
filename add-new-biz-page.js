@@ -79,15 +79,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
       setTimeout(function () {
         if (matchingOptionsStrict === 0) {
-          console.log('No match');
+          console.log("No match");
           searchInput.classList.add("is-invalid");
           submit_btn.setAttribute("disabled", "disabled");
         } else {
-          console.log('Match');
+          console.log("Match");
           searchInput.classList.remove("is-invalid");
           submit_btn.removeAttribute("disabled");
         }
-      }, 600);
+      }, 200);
 
       select.size = Math.max(matchingOptions, 1) + 1;
       clearButton.style.display = searchInput.value ? "inline-block" : "none";
@@ -96,6 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
     searchInput.addEventListener("focus", showAndFilterOptions);
     searchInput.addEventListener("input", showAndFilterOptions);
     searchInput.addEventListener("change", showAndFilterOptions);
+    searchInput.addEventListener("blur", showAndFilterOptions);
 
     function selectClicked(event) {
       const isClickOutsideSelect = !select.contains(event.target);
