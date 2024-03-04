@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
           searchInput.classList.remove("is-invalid");
           submit_btn.removeAttribute("disabled");
         }
-      }, 200);
+      }, 600);
 
       select.size = Math.max(matchingOptions, 1) + 1;
       clearButton.style.display = searchInput.value ? "inline-block" : "none";
