@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
       otherOption.value = "אחר";
       otherOption.textContent = "לא מצאתם? הוסיפו...";
       otherOption.setAttribute("id", `other-option-${index}`);
-      otherOption.setAttribute("class", "input-option");
+      otherOption.setAttribute("class", "input-option input-option-other");
       select.appendChild(otherOption);
     }
     searchInput.parentNode.insertBefore(select, searchInput.nextSibling);
@@ -79,11 +79,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       setTimeout(function () {
         if (matchingOptionsStrict === 0) {
-          console.log("No match");
+          //console.log("No match");
           searchInput.classList.add("is-invalid");
           submit_btn.setAttribute("disabled", "disabled");
         } else {
-          console.log("Match");
+          //console.log("Match");
           searchInput.classList.remove("is-invalid");
           submit_btn.removeAttribute("disabled");
         }
