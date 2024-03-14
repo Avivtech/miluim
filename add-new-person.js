@@ -36,11 +36,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let matchingOptions = 0;
   let matchingOptionsStrict = 0;
 
-  const option_items = group.querySelectorAll(".option-item");
-  const searchInput = group.querySelector(".option-search");
-  const clearButton = group.querySelector(".clear-selection");
-  const select = document.createElement("select");
-
   // CMSLoad loaded
   window.fsAttributes = window.fsAttributes || [];
   window.fsAttributes.push([
@@ -51,6 +46,11 @@ document.addEventListener("DOMContentLoaded", () => {
       listInstance.on("renderitems", (renderedItems) => {
         // Select inputs
         document.querySelectorAll(".select-group").forEach((group, index) => {
+          const option_items = group.querySelectorAll(".option-item");
+          const searchInput = group.querySelector(".option-search");
+          const clearButton = group.querySelector(".clear-selection");
+          const select = document.createElement("select");
+
           function checkSelectValid() {
             matchingOptions = 0;
             matchingOptionsStrict = 0;
