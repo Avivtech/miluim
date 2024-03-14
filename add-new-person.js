@@ -41,9 +41,11 @@ document.addEventListener("DOMContentLoaded", () => {
   window.fsAttributes.push([
     "cmsload",
     (listInstances) => {
+      console.log("cmsload Successfully loaded!");
       const [listInstance] = listInstances;
 
       listInstance.on("renderitems", (renderedItems) => {
+        console.log(renderedItems);
         // Select inputs
         document.querySelectorAll(".select-group").forEach((group, index) => {
           console.log(group, index);
@@ -262,5 +264,4 @@ function selectClicked(event) {
     }
   });
 }
-
 document.addEventListener("click", selectClicked, true);
