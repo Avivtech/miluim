@@ -42,13 +42,11 @@ document.addEventListener("DOMContentLoaded", () => {
     "cmsload",
     (listInstances) => {
       const [listInstance] = listInstances;
-      console.log(listInstance);
 
       listInstance.on("renderitems", (renderedItems) => {});
 
       // Select inputs
       document.querySelectorAll(".select-group").forEach((group, index) => {
-        console.log(group, index);
         const option_items = group.querySelectorAll(".option-item");
         const searchInput = group.querySelector(".option-search");
         const clearButton = group.querySelector(".clear-selection");
@@ -164,6 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   all_selects.forEach(function (select_list) {
     select_list.addEventListener("change", function () {
+      console.log('other selected');
       let other_wrap = select_list.parentElement.parentElement.nextElementSibling;
 
       if (other_wrap.querySelector(".input-wrap")) {
