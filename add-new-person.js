@@ -46,6 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
       listInstance.on("renderitems", (renderedItems) => {
         // Select inputs
         document.querySelectorAll(".select-group").forEach((group, index) => {
+          console.log(group, index);
           const option_items = group.querySelectorAll(".option-item");
           const searchInput = group.querySelector(".option-search");
           const clearButton = group.querySelector(".clear-selection");
