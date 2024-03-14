@@ -1,4 +1,4 @@
-// Tiny RTX editor
+// Tiny RTX editor initialization
 tinymce.init({
   selector: "textarea",
   menubar: false,
@@ -10,13 +10,15 @@ tinymce.init({
   toolbar: "undo redo | blocks | bold italic underline strikethrough | link | numlist bullist | emoticons charmap | removeformat",
 });
 
+// Touch device detection
 function isTouchDevice() {
   return "ontouchstart" in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
 }
+
 const submit_btn = document.getElementById("submit");
 const touchDevice = isTouchDevice();
 
-// Locations array
+// Combining arrays and creating elements
 const combinedArray = [...part_a, ...part_b];
 const a = document.createElement("div");
 a.setAttribute("class", "hide");
@@ -30,7 +32,7 @@ combinedArray.forEach((optionValue) => {
 
 document.getElementById("city-wrap")?.appendChild(a);
 
-//document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
   // CMSLoad loaded
   window.fsAttributes = window.fsAttributes || [];
   window.fsAttributes.push([
@@ -122,17 +124,6 @@ document.getElementById("city-wrap")?.appendChild(a);
           searchInput.addEventListener("change", showAndFilterOptions);
           searchInput.addEventListener("blur", showAndFilterOptions);
 
-          function selectClicked(event) {
-            const isClickOutsideSelect = !select.contains(event.target);
-            const isClickOutsideSearchInput = !searchInput.contains(event.target);
-
-            if (isClickOutsideSelect || isClickOutsideSearchInput) {
-              select.style.display = "none";
-              clearButton.style.display = searchInput.value ? "inline-block" : "none";
-            }
-          }
-
-          document.addEventListener("click", selectClicked(event), true);
           document.addEventListener("click", function (event) {
             let isClickInsideOptionSearch = event.target.closest(".option-search") !== null;
             let isClickInsideInput = event.target.closest("input") !== null;
@@ -172,6 +163,7 @@ document.getElementById("city-wrap")?.appendChild(a);
   all_selects.forEach(function (select_list) {
     select_list.addEventListener("change", function () {
       let other_wrap = select_list.parentElement.parentElement.nextElementSibling;
+
       if (other_wrap.querySelector(".input-wrap")) {
         if (this.value === "אחר") {
           other_wrap.querySelector(".input-wrap").classList.remove("hide");
@@ -259,4 +251,15 @@ document.getElementById("city-wrap")?.appendChild(a);
       createUploadWidget(uBtn.id).open();
     });
   });
-//});
+});
+
+// selectClicked function
+function selectClicked(event) {
+  document.querySelectorAll(".select-list").forEach((select) => {
+    if (!select.contains(event.target) && !event.target.matches(".option-search")) {
+      select.style.display = "none";
+    }
+  });
+}
+
+document.addEventListener("click", selectClicked, true);
