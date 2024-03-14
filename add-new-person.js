@@ -154,26 +154,26 @@ document.addEventListener("DOMContentLoaded", () => {
           showAndFilterOptions();
         });
       });
+
+      // Show 'other' if selected
+      const all_selects = document.querySelectorAll(".select-list");
+
+      all_selects.forEach(function (select_list) {
+        select_list.addEventListener("change", function () {
+          console.log("selected");
+          let other_wrap = select_list.parentElement.parentElement.nextElementSibling;
+
+          if (other_wrap.querySelector(".input-wrap")) {
+            if (this.value === "אחר") {
+              other_wrap.querySelector(".input-wrap").classList.remove("hide");
+            } else {
+              other_wrap.querySelector(".input-wrap").classList.add("hide");
+            }
+          }
+        });
+      });
     },
   ]);
-
-  // Show 'other' if selected
-  const all_selects = document.querySelectorAll(".select-list");
-
-  all_selects.forEach(function (select_list) {
-    select_list.addEventListener("change", function () {
-      console.log('other selected');
-      let other_wrap = select_list.parentElement.parentElement.nextElementSibling;
-
-      if (other_wrap.querySelector(".input-wrap")) {
-        if (this.value === "אחר") {
-          other_wrap.querySelector(".input-wrap").classList.remove("hide");
-        } else {
-          other_wrap.querySelector(".input-wrap").classList.add("hide");
-        }
-      }
-    });
-  });
 
   // URL validation
   const urlInputs = document.querySelectorAll('input[type="url"]');
