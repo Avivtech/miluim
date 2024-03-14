@@ -41,8 +41,8 @@ document.addEventListener("DOMContentLoaded", () => {
   window.fsAttributes.push([
     "cmsload",
     (listInstances) => {
-      console.log("cmsload Successfully loaded!");
       const [listInstance] = listInstances;
+      console.log(listInstance);
 
       listInstance.on("renderitems", (renderedItems) => {
         console.log(renderedItems);
