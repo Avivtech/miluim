@@ -30,7 +30,7 @@ combinedArray.forEach((optionValue) => {
 
 document.getElementById("city-wrap")?.appendChild(a);
 
-document.addEventListener("DOMContentLoaded", () => {
+//document.addEventListener("DOMContentLoaded", () => {
   // CMSLoad loaded
   window.fsAttributes = window.fsAttributes || [];
   window.fsAttributes.push([
@@ -259,4 +259,4 @@ document.addEventListener("DOMContentLoaded", () => {
       createUploadWidget(uBtn.id).open();
     });
   });
-});
+//});
