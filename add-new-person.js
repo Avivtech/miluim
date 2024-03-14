@@ -44,117 +44,116 @@ document.addEventListener("DOMContentLoaded", () => {
       const [listInstance] = listInstances;
       console.log(listInstance);
 
-      listInstance.on("renderitems", (renderedItems) => {
-        console.log(renderedItems);
-        // Select inputs
-        document.querySelectorAll(".select-group").forEach((group, index) => {
-          console.log(group, index);
-          const option_items = group.querySelectorAll(".option-item");
-          const searchInput = group.querySelector(".option-search");
-          const clearButton = group.querySelector(".clear-selection");
-          const select = document.createElement("select");
+      listInstance.on("renderitems", (renderedItems) => {});
 
-          function checkSelectValid() {
-            matchingOptions = 0;
-            matchingOptionsStrict = 0;
+      // Select inputs
+      document.querySelectorAll(".select-group").forEach((group, index) => {
+        console.log(group, index);
+        const option_items = group.querySelectorAll(".option-item");
+        const searchInput = group.querySelector(".option-search");
+        const clearButton = group.querySelector(".clear-selection");
+        const select = document.createElement("select");
 
-            Array.from(select.options).forEach((option) => {
-              if (!option.hidden) matchingOptions++;
-              if (!option.hidden && option.value.toLowerCase() === searchInput.value.toLowerCase()) {
-                matchingOptionsStrict++;
+        function checkSelectValid() {
+          matchingOptions = 0;
+          matchingOptionsStrict = 0;
+
+          Array.from(select.options).forEach((option) => {
+            if (!option.hidden) matchingOptions++;
+            if (!option.hidden && option.value.toLowerCase() === searchInput.value.toLowerCase()) {
+              matchingOptionsStrict++;
+            }
+          });
+
+          if (matchingOptionsStrict === 0) {
+            searchInput.classList.add("is-invalid");
+            submit_btn.setAttribute("disabled", "disabled");
+          } else {
+            searchInput.classList.remove("is-invalid");
+            submit_btn.removeAttribute("disabled");
+          }
+        }
+
+        select.setAttribute("class", "select-list");
+        select.setAttribute("id", `select-${index}`);
+
+        select.style.zIndex = "3";
+        select.style.position = "absolute";
+        select.style.display = "none";
+        select.style.padding = "6px 12px";
+        select.style.width = searchInput.offsetWidth + "px";
+        select.size = Math.min(option_items.length, 10) + 1;
+        select.setAttribute("direction", "rtl");
+
+        option_items.forEach((item) => {
+          const option = document.createElement("option");
+          option.value = item.textContent.trim();
+          option.textContent = item.textContent.trim();
+          option.setAttribute("class", "input-option");
+          select.appendChild(option);
+        });
+
+        if (index === 0) {
+          const otherOption = document.createElement("option");
+          otherOption.value = "אחר";
+          otherOption.textContent = "לא מצאתם? הוסיפו...";
+          otherOption.setAttribute("id", `other-option-${index}`);
+          otherOption.setAttribute("class", "input-option input-option-other");
+          select.appendChild(otherOption);
+        }
+        searchInput.parentNode.insertBefore(select, searchInput.nextSibling);
+
+        const showAndFilterOptions = () => {
+          select.style.display = "block";
+          const searchValue = searchInput.value.toLowerCase();
+
+          Array.from(select.options).forEach((option) => {
+            const matches = option.value.toLowerCase().includes(searchValue);
+            const matchesStrict = option.value.toLowerCase() === searchValue; // Strict matching
+
+            option.hidden = !matches;
+            if (matches) matchingOptions++;
+            if (matchesStrict) matchingOptionsStrict++;
+          });
+
+          checkSelectValid();
+
+          select.size = Math.max(matchingOptions, 1);
+          clearButton.style.display = searchInput.value ? "inline-block" : "none";
+        };
+
+        searchInput.addEventListener("focus", showAndFilterOptions);
+        searchInput.addEventListener("input", showAndFilterOptions);
+        searchInput.addEventListener("change", showAndFilterOptions);
+        searchInput.addEventListener("blur", showAndFilterOptions);
+
+        document.addEventListener("click", function (event) {
+          let isClickInsideOptionSearch = event.target.closest(".option-search") !== null;
+          let isClickInsideInput = event.target.closest("input") !== null;
+          let isClickInsideButton = event.target.closest("button") !== null;
+
+          if (!isClickInsideOptionSearch && !isClickInsideInput && !isClickInsideButton) {
+            document.querySelectorAll(".select-list").forEach((select) => {
+              if (!select.contains(event.target)) {
+                select.style.display = "none";
+                checkSelectValid();
               }
             });
-
-            if (matchingOptionsStrict === 0) {
-              searchInput.classList.add("is-invalid");
-              submit_btn.setAttribute("disabled", "disabled");
-            } else {
-              searchInput.classList.remove("is-invalid");
-              submit_btn.removeAttribute("disabled");
-            }
           }
+        });
 
-          select.setAttribute("class", "select-list");
-          select.setAttribute("id", `select-${index}`);
-
-          select.style.zIndex = "3";
-          select.style.position = "absolute";
+        select.addEventListener("change", () => {
+          searchInput.value = select.value;
           select.style.display = "none";
-          select.style.padding = "6px 12px";
-          select.style.width = searchInput.offsetWidth + "px";
-          select.size = Math.min(option_items.length, 10) + 1;
-          select.setAttribute("direction", "rtl");
+          clearButton.style.display = "inline-block";
+        });
 
-          option_items.forEach((item) => {
-            const option = document.createElement("option");
-            option.value = item.textContent.trim();
-            option.textContent = item.textContent.trim();
-            option.setAttribute("class", "input-option");
-            select.appendChild(option);
-          });
-
-          if (index === 0) {
-            const otherOption = document.createElement("option");
-            otherOption.value = "אחר";
-            otherOption.textContent = "לא מצאתם? הוסיפו...";
-            otherOption.setAttribute("id", `other-option-${index}`);
-            otherOption.setAttribute("class", "input-option input-option-other");
-            select.appendChild(otherOption);
-          }
-          searchInput.parentNode.insertBefore(select, searchInput.nextSibling);
-
-          const showAndFilterOptions = () => {
-            select.style.display = "block";
-            const searchValue = searchInput.value.toLowerCase();
-
-            Array.from(select.options).forEach((option) => {
-              const matches = option.value.toLowerCase().includes(searchValue);
-              const matchesStrict = option.value.toLowerCase() === searchValue; // Strict matching
-
-              option.hidden = !matches;
-              if (matches) matchingOptions++;
-              if (matchesStrict) matchingOptionsStrict++;
-            });
-
-            checkSelectValid();
-
-            select.size = Math.max(matchingOptions, 1);
-            clearButton.style.display = searchInput.value ? "inline-block" : "none";
-          };
-
-          searchInput.addEventListener("focus", showAndFilterOptions);
-          searchInput.addEventListener("input", showAndFilterOptions);
-          searchInput.addEventListener("change", showAndFilterOptions);
-          searchInput.addEventListener("blur", showAndFilterOptions);
-
-          document.addEventListener("click", function (event) {
-            let isClickInsideOptionSearch = event.target.closest(".option-search") !== null;
-            let isClickInsideInput = event.target.closest("input") !== null;
-            let isClickInsideButton = event.target.closest("button") !== null;
-
-            if (!isClickInsideOptionSearch && !isClickInsideInput && !isClickInsideButton) {
-              document.querySelectorAll(".select-list").forEach((select) => {
-                if (!select.contains(event.target)) {
-                  select.style.display = "none";
-                  checkSelectValid();
-                }
-              });
-            }
-          });
-
-          select.addEventListener("change", () => {
-            searchInput.value = select.value;
-            select.style.display = "none";
-            clearButton.style.display = "inline-block";
-          });
-
-          clearButton.addEventListener("click", () => {
-            searchInput.value = "";
-            select.value = "";
-            select.style.display = "none";
-            clearButton.style.display = "none";
-            showAndFilterOptions();
-          });
+        clearButton.addEventListener("click", () => {
+          searchInput.value = "";
+          select.value = "";
+          select.style.display = "none";
+          clearButton.style.display = "none";
+          showAndFilterOptions();
         });
       });
     },
