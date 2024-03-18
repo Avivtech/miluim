@@ -9,6 +9,11 @@ tinymce.init({
   plugins: "autolink charmap emoticons link lists searchreplace visualblocks wordcount",
   toolbar: "undo redo | blocks | bold italic underline strikethrough | link | numlist bullist | emoticons charmap | removeformat",
 });
+const wordcount = tinymce.activeEditor.plugins.wordcount;
+
+console.log(wordcount.body.getWordCount());
+console.log(wordcount.body.getCharacterCount());
+console.log(wordcount.body.getCharacterCountWithoutSpaces();
 
 // Touch device detection
 function isTouchDevice() {
