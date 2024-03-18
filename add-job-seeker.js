@@ -3,18 +3,12 @@ tinymce.init({
   selector: "textarea",
   menubar: false,
   height: 200,
-  max_chars: 100,
   branding: false,
   directionality: "rtl",
   content_langs: [{ title: "Hebrew", code: "he" }],
   plugins: "autolink charmap emoticons link lists searchreplace visualblocks wordcount",
   toolbar: "undo redo | blocks | bold italic underline strikethrough | link | numlist bullist | emoticons charmap | removeformat",
 });
-const wordcount = tinymce.activeEditor.plugins.wordcount;
-
-console.log(wordcount.body.getWordCount());
-console.log(wordcount.body.getCharacterCount());
-console.log(wordcount.body.getCharacterCountWithoutSpaces();
 
 // Touch device detection
 function isTouchDevice() {
