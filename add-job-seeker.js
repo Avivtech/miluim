@@ -2,8 +2,6 @@
 tinymce.init({
   selector: "textarea",
   menubar: false,
-  skin: 'naked',
-  icons: 'small',
   height: 200,
   branding: false,
   directionality: "rtl",
