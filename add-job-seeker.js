@@ -183,9 +183,15 @@ urlInputs.forEach((input) => {
   input.addEventListener("change", function () {
     let urlValue = this.value.trim();
 
-    // Add "https://www." if not present
-    if (urlValue && !urlValue.startsWith("http://") && !urlValue.startsWith("https://")) {
+    // Add "https://www." if not present and not starting with 'www.'
+    if (urlValue && !urlValue.startsWith("http://") && !urlValue.startsWith("https://") && !urlValue.startsWith("www.")) {
       urlValue = "https://www." + urlValue;
+      this.value = urlValue; // Update the input field
+    }
+
+    // Prepend "https://" if it starts with "www." but doesn't have "https://"
+    if (urlValue.startsWith("www.")) {
+      urlValue = "https://" + urlValue;
       this.value = urlValue; // Update the input field
     }
 
