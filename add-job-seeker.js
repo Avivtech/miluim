@@ -3,6 +3,7 @@ tinymce.init({
   selector: "textarea",
   menubar: false,
   height: 200,
+  max_chars: 100,
   branding: false,
   directionality: "rtl",
   content_langs: [{ title: "Hebrew", code: "he" }],
