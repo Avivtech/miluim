@@ -175,33 +175,39 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   ]);
 
-  // URL validation
-  const urlInputs = document.querySelectorAll('input[type="url"]');
-  const urlPattern = new RegExp("^(https?:\\/\\/)?" + "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + "((\\d{1,3}\\.){3}\\d{1,3}))" + "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + "(\\?[;&a-z\\d%_.~+=-]*)?" + "(\\#[-a-z\\d_]*)?$", "i");
+// URL validation
+const urlInputs = document.querySelectorAll('input[type="url"]');
+const urlPattern = new RegExp("^(https?:\\/\\/www.)?" + "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + "((\\d{1,3}\\.){3}\\d{1,3}))" + "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + "(\\?[;&a-z\\d%_.~+=-]*)?" + "(\\#[-a-z\\d_]*)?$", "i");
 
-  urlInputs.forEach((input) => {
-    input.addEventListener("change", function () {
-      const urlValue = this.value.trim();
+urlInputs.forEach((input) => {
+  input.addEventListener("change", function () {
+    let urlValue = this.value.trim();
 
-      if (input.required && !urlValue) {
-        console.error("This field is required. Please enter a URL.");
-        this.classList.add("is-invalid");
-        submit_btn.setAttribute("disabled", "disabled");
-        return;
-      }
+    // Add "https://www." if not present
+    if (urlValue && !urlValue.startsWith("http://") && !urlValue.startsWith("https://")) {
+      urlValue = "https://www." + urlValue;
+      this.value = urlValue; // Update the input field
+    }
 
-      if (urlValue && !urlPattern.test(urlValue)) {
-        this.classList.add("is-invalid");
-        submit_btn.setAttribute("disabled", "disabled");
-      } else if (urlValue) {
-        this.classList.remove("is-invalid");
-        submit_btn.removeAttribute("disabled");
-      } else {
-        this.classList.remove("is-invalid");
-        submit_btn.removeAttribute("disabled");
-      }
-    });
+    if (input.required && !urlValue) {
+      console.error("This field is required. Please enter a URL.");
+      this.classList.add("is-invalid");
+      submit_btn.setAttribute("disabled", "disabled");
+      return;
+    }
+
+    if (urlValue && !urlPattern.test(urlValue)) {
+      this.classList.add("is-invalid");
+      submit_btn.setAttribute("disabled", "disabled");
+    } else if (urlValue) {
+      this.classList.remove("is-invalid");
+      submit_btn.removeAttribute("disabled");
+    } else {
+      this.classList.remove("is-invalid");
+      submit_btn.removeAttribute("disabled");
+    }
   });
+});
 
   // Spam honeypot
   let advantageInput = document.getElementById("advantage");
