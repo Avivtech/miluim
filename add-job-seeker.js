@@ -6,7 +6,7 @@ tinymce.init({
   branding: false,
   directionality: "rtl",
   content_langs: [{ title: "Hebrew", code: "he" }],
-  plugins: "autolink charmap emoticons link lists searchreplace visualblocks",
+  plugins: "autolink charmap emoticons link lists searchreplace visualblocks wordcount",
   toolbar: "undo redo | blocks | bold italic underline strikethrough | link | numlist bullist | emoticons charmap | removeformat",
 });
 
