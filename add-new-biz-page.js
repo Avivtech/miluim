@@ -78,8 +78,8 @@ document.addEventListener("DOMContentLoaded", () => {
 			select.appendChild(otherOption);
 		}
 		searchInput.parentNode.insertBefore(select, searchInput.nextSibling);
-		if (!searchInput.value.trim()) markInvalid();
-		else markValid();
+		searchInput.classList.remove("is-invalid");
+		submit_btn && submit_btn.removeAttribute("disabled");
 
 		const showAndFilterOptions = () => {
 			select.style.display = "block";
