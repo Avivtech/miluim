@@ -306,9 +306,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	form.addEventListener("submit", (event) => {
 		console.log("Form submitted!");
-		const formElements = form.querySelectorAll("input, select, textarea, button, radio, checkbox");
-		formElements.forEach((element) => {
-			element.disabled = true;
-		});
+		form.classList.add("submitted");
 	});
 });
