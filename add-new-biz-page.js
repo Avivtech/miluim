@@ -6,6 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
 	const form = document.getElementById("add-business");
 	const submit_btn = document.getElementById("submit");
 	const touchDevice = isTouchDevice();
+	const inputUrl = document.getElementById("inputUrl");
+
+	inputUrl.value = window.location.href;
 
 	if (touchDevice) {
 		//console.log("Touch device");
