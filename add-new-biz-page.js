@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	const touchDevice = isTouchDevice();
 	const inputUrl = document.getElementById("inputUrl");
 
-	inputUrl.value = window.location.href;
+	if (inputUrl) inputUrl.value = window.location.host;
 
 	if (touchDevice) {
 		//console.log("Touch device");
@@ -33,9 +33,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// Select inputs
 	document.querySelectorAll(".select-group").forEach((group, index) => {
-		const option_items = group.querySelectorAll(".option-item");
+		let option_items = group.querySelectorAll(".option-item");
+		if (!option_items.length) {
+			option_items = document.querySelectorAll("#city-wrap .option-item");
+		}
+
 		const searchInput = group.querySelector(".option-search");
 		const clearButton = group.querySelector(".clear-selection");
+		const markValid = () => {
+			searchInput.classList.remove("is-invalid");
+			submit_btn && submit_btn.removeAttribute("disabled");
+		};
+		const markInvalid = () => {
+			searchInput.classList.add("is-invalid");
+			submit_btn && submit_btn.setAttribute("disabled", "disabled");
+		};
 		const select = document.createElement("select");
 
 		select.setAttribute("class", "select-list");
@@ -66,6 +78,8 @@ document.addEventListener("DOMContentLoaded", () => {
 			select.appendChild(otherOption);
 		}
 		searchInput.parentNode.insertBefore(select, searchInput.nextSibling);
+		if (!searchInput.value.trim()) markInvalid();
+		else markValid();
 
 		const showAndFilterOptions = () => {
 			select.style.display = "block";
@@ -85,18 +99,6 @@ document.addEventListener("DOMContentLoaded", () => {
 				if (matchesStrict) matchingOptionsStrict++;
 			});
 
-			setTimeout(function () {
-				if (matchingOptionsStrict === 0) {
-					//console.log("No match");
-					searchInput.classList.add("is-invalid");
-					submit_btn.setAttribute("disabled", "disabled");
-				} else {
-					//console.log("Match");
-					searchInput.classList.remove("is-invalid");
-					submit_btn.removeAttribute("disabled");
-				}
-			}, 200);
-
 			select.size = Math.max(matchingOptions, 1) + 1;
 			clearButton.style.display = searchInput.value ? "inline-block" : "none";
 		};
@@ -105,9 +107,9 @@ document.addEventListener("DOMContentLoaded", () => {
 		searchInput.addEventListener("input", showAndFilterOptions);
 		searchInput.addEventListener("change", showAndFilterOptions);
 		searchInput.addEventListener("blur", () => {
-			// small delay so option click can register first
 			setTimeout(() => {
 				select.style.display = "none";
+				if (!searchInput.value.trim()) markInvalid();
 			}, 120);
 		});
 
@@ -126,16 +128,16 @@ document.addEventListener("DOMContentLoaded", () => {
 			const isClickOutsideSelect = !select.contains(event.target);
 			const isClickOutsideSearchInput = !searchInput.contains(event.target);
 			if (isClickOutsideSelect && isClickOutsideSearchInput) {
-				// AND, not OR
 				select.style.display = "none";
-				clearButton && (clearButton.style.display = searchInput.value ? "inline-block" : "none");
+				if (clearButton) clearButton.style.display = searchInput.value ? "inline-block" : "none";
 			}
 		}
 
 		select.addEventListener("change", () => {
 			searchInput.value = select.value;
 			select.style.display = "none";
-			clearButton.style.display = "inline-block";
+			if (clearButton) clearButton.style.display = "inline-block";
+			markValid(); // <-- only here we mark valid
 		});
 
 		clearButton.addEventListener("click", () => {
@@ -143,6 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			select.value = "";
 			select.style.display = "none";
 			clearButton.style.display = "none";
+			markInvalid(); // <-- invalid only when nothing is selected
 			showAndFilterOptions();
 		});
 	});
