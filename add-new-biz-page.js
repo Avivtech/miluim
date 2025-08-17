@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		select.style.padding = "6px 12px";
 		select.style.width = searchInput.offsetWidth + "px";
 		select.size = Math.min(option_items.length, 10) + 1;
-		select.setAttribute("direction", "rtl");
+		select.setAttribute("dir", "rtl");
 
 		option_items.forEach((item) => {
 			const option = document.createElement("option");
@@ -68,6 +68,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		const showAndFilterOptions = () => {
 			select.style.display = "block";
+			const w = searchInput.getBoundingClientRect().width || searchInput.offsetWidth;
+			select.style.width = w + "px";
+
 			const searchValue = searchInput.value.toLowerCase();
 			let matchingOptions = 0;
 			let matchingOptionsStrict = 0;
@@ -100,7 +103,12 @@ document.addEventListener("DOMContentLoaded", () => {
 		searchInput.addEventListener("focus", showAndFilterOptions);
 		searchInput.addEventListener("input", showAndFilterOptions);
 		searchInput.addEventListener("change", showAndFilterOptions);
-		searchInput.addEventListener("blur", showAndFilterOptions);
+		searchInput.addEventListener("blur", () => {
+			// small delay so option click can register first
+			setTimeout(() => {
+				select.style.display = "none";
+			}, 120);
+		});
 
 		function selectClicked(event) {
 			const isClickOutsideSelect = !select.contains(event.target);
@@ -112,18 +120,16 @@ document.addEventListener("DOMContentLoaded", () => {
 			}
 		}
 
-		document.addEventListener("click", selectClicked(event), true);
-		document.addEventListener("click", function (event) {
-			let isClickInsideOptionSearch = event.target.closest(".option-search") !== null;
-
-			if (!isClickInsideOptionSearch) {
-				document.querySelectorAll(".select-list").forEach((select) => {
-					if (!select.contains(event.target)) {
-						select.style.display = "none";
-					}
-				});
+		document.addEventListener("click", selectClicked, true);
+		function selectClicked(event) {
+			const isClickOutsideSelect = !select.contains(event.target);
+			const isClickOutsideSearchInput = !searchInput.contains(event.target);
+			if (isClickOutsideSelect && isClickOutsideSearchInput) {
+				// AND, not OR
+				select.style.display = "none";
+				clearButton && (clearButton.style.display = searchInput.value ? "inline-block" : "none");
 			}
-		});
+		}
 
 		select.addEventListener("change", () => {
 			searchInput.value = select.value;
@@ -161,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	const urlPattern = new RegExp("^(https?:\\/\\/)?" + "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + "((\\d{1,3}\\.){3}\\d{1,3}))" + "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + "(\\?[;&a-z\\d%_.~+=-]*)?" + "(\\#[-a-z\\d_]*)?$", "i");
 
 	urlInputs.forEach((input) => {
-		input.addEventListener("change", function () {
+		input.addEventListener("input", function () {
 			const urlValue = this.value.trim();
 
 			if (input.required && !urlValue) {
@@ -299,5 +305,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	form.addEventListener("submit", (event) => {
 		console.log("Form submitted!");
+		const formElements = form.querySelectorAll("input, select, textarea, button, radio, checkbox");
+		formElements.forEach((element) => {
+			element.disabled = true;
+		});
 	});
 });
