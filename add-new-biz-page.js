@@ -3,6 +3,7 @@ function isTouchDevice() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+	console.log("Document loaded");
 	const form = document.getElementById("add-business");
 	const submit_btn = document.getElementById("submit");
 	const touchDevice = isTouchDevice();
